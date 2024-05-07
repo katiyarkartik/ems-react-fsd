@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import EmployeeService from '../../services/EmployeeService';
 
 
 const UpdateEmp = () => {
@@ -18,8 +20,23 @@ const UpdateEmp = () => {
     evt.preventDefault();
     
     console.log(empData.employeeId, empData.firstName, empData.salary)
-    if(empList.find((emp)=> emp.employeeId == empData.employeeId)){
-      alert("correct")
+    const foundEmp = empList.find((emp)=> emp.employeeId == empData.employeeId)
+    if(foundEmp){
+      const updatedData = {
+        "employeeId": empData.employeeId,
+        "firstName": empData.firstName,
+        "salary": empData.salary
+    }
+      // axios.put('http://localhost:9090/emp/update-emp',updatedData)
+      EmployeeService.updateEmployee(updatedData)
+      .then((res)=>{
+        alert('employee updated')
+        
+        setEmpData({employeeId:'', firstName: '',salary: '' })
+        return  res;
+      }).catch(err =>  {
+        alert("Cannot update employee")
+      })
     }
     else{
       alert("invalid")

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import EmployeeService from '../../services/EmployeeService';
 const DeleteEmp = () => {
   const [empId, setEmpId] =useState('');
 
   const deleteEmployee =()=>{
 
-    axios.delete(`http://localhost:9090/emp/delete-emp/${empId}`)
+    // axios.delete(`http://localhost:9090/emp/delete-emp/${empId}`)
+    EmployeeService.deleteEmployee(empId)
     .then((response) => {
       
       console.log('Employee deleted successfully:', response.data);
@@ -15,7 +17,8 @@ const DeleteEmp = () => {
       setEmpId('');
     })
     .catch((error) => {
-      console.error('Error deleting employee:', error);
+      alert("No Employee found")
+      
     });
   }
   return (

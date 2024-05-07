@@ -1,6 +1,8 @@
 
 import axios from "axios";
 import { useState } from "react";
+import UserService from "../../services/UserService";
+import EmployeeService from "../../services/EmployeeService";
 
 const AddEmployee = () => {
     const backendUrl = 'http://localhost:9090/emp/add-emp';
@@ -21,15 +23,6 @@ const AddEmployee = () => {
             isValid = false;
         }
 
-        // if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(empData.email)) {
-        //     newErrors.email = "Invalid email address";
-        //     isValid = false;
-        // }
-
-        // if (!/^\d{12}$/.test(empData.aadhaar)) {
-        //     newErrors.aadhaar = "Aadhaar must be a 12-digit number";
-        //     isValid = false;
-        // }
 
         if (empData.salary <= 0 || isNaN(empData.salary)) {
             newErrors.salary = "Salary must be a positive number";
@@ -40,12 +33,13 @@ const AddEmployee = () => {
         return isValid;
     };
 
-    const handleSubmit = (evt) => {
+    const handleSubmit = async(evt) => {
         evt.preventDefault();
         if (validateForm()) {
-            axios.post(backendUrl, empData)
+            // await axios.post(backendUrl, empData)
+            EmployeeService.addEmployee(empData)
                 .then((resp) => {
-                    alert(`${resp.data.firstName}  added successfully!`);
+                    alert(`${resp.firstName}  added successfully!`);
                     setEmpData({ firstName: '',
                     //  email: '', aadhaar: '', 
                     salary: '' });
