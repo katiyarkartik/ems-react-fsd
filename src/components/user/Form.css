@@ -1,0 +1,20 @@
+.form-container{
+    background-color: aliceblue;
+
+}
+.form-page{
+    height: calc(100vh - 56px);
+    background-color: brown;
+}
+.add-emp-form{
+    width: 35%;
+    
+}
+.table{
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+li{
+    cursor:  pointer;
+}
